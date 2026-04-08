@@ -18,56 +18,8 @@ import { Course } from '../../models/models';
     MatInputModule,
     MatButtonModule
   ],
-  template: `
-    <h2 mat-dialog-title>{{ data.isEditMode ? 'Edit Course' : 'Add New Course' }}</h2>
-    <mat-dialog-content>
-      <form [formGroup]="form" class="form">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Course Name</mat-label>
-          <input matInput formControlName="name" />
-          <mat-error *ngIf="form.get('name')?.hasError('required')">
-            Course name is required
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" rows="4"></textarea>
-          <mat-error *ngIf="form.get('description')?.hasError('required')">
-            Description is required
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Credits</mat-label>
-          <input matInput formControlName="credits" type="number" />
-          <mat-error *ngIf="form.get('credits')?.hasError('required')">
-            Credits is required
-          </mat-error>
-          <mat-error *ngIf="form.get('credits')?.hasError('min')">
-            Credits must be at least 1
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid">
-        {{ data.isEditMode ? 'Update' : 'Add' }}
-      </button>
-    </mat-dialog-actions>
-  `,
-  styles: [`
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .full-width {
-      width: 100%;
-    }
-  `]
+  templateUrl: './course-form-dialog.component.html',
+  styleUrls: ['./course-form-dialog.component.scss']
 })
 export class CourseFormDialogComponent {
   form: FormGroup;

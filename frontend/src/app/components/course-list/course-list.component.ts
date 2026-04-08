@@ -23,96 +23,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
     MatDialogModule,
     MatSnackBarModule
   ],
-  template: `
-    <div class="course-list-container">
-      <div class="header">
-        <button mat-raised-button color="primary" (click)="openAddDialog()">
-          <mat-icon>add</mat-icon>
-          Add Course
-        </button>
-      </div>
-
-      <table mat-table [dataSource]="courses" class="course-table">
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-        </ng-container>
-
-        <!-- Description Column -->
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-        </ng-container>
-
-        <!-- Credits Column -->
-        <ng-container matColumnDef="credits">
-          <th mat-header-cell *matHeaderCellDef>Credits</th>
-          <td mat-cell *matCellDef="let element">{{ element.credits }}</td>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="accent" (click)="openEditDialog(element)" title="Edit">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="openDeleteDialog(element)" title="Delete">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <div *ngIf="courses.length === 0" class="no-data">
-        <p>No courses found. Add one to get started!</p>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .course-list-container {
-      padding: 20px 0;
-    }
-
-    .header {
-      margin-bottom: 20px;
-    }
-
-    .course-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .course-table th,
-    .course-table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .course-table th {
-      background-color: #f5f5f5;
-      font-weight: 600;
-    }
-
-    .course-table tr:hover {
-      background-color: #f9f9f9;
-    }
-
-    .no-data {
-      text-align: center;
-      padding: 40px;
-      color: #999;
-    }
-
-    button {
-      margin: 0 4px;
-    }
-  `]
+  templateUrl: './course-list.component.html',
+  styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent implements OnInit {
   private courseService = inject(CourseService);
@@ -130,6 +42,7 @@ export class CourseListComponent implements OnInit {
   }
 
   openAddDialog(): void {
+    this.dialog.closeAll();
     const dialogRef = this.dialog.open(CourseFormDialogComponent, {
       width: '500px',
       data: { isEditMode: false }
@@ -146,6 +59,7 @@ export class CourseListComponent implements OnInit {
   }
 
   openEditDialog(course: Course): void {
+    this.dialog.closeAll();
     const dialogRef = this.dialog.open(CourseFormDialogComponent, {
       width: '500px',
       data: { course, isEditMode: true }
@@ -162,6 +76,7 @@ export class CourseListComponent implements OnInit {
   }
 
   openDeleteDialog(course: Course): void {
+    this.dialog.closeAll();
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {

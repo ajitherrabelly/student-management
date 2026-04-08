@@ -5,9 +5,9 @@ import { DashboardComponent } from './pages/dashboard.component';
   selector: 'app-root',
   standalone: true,
   imports: [DashboardComponent],
-  template: `<app-dashboard></app-dashboard>`,
-  styles: []
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Student Management System';
+  // title = 'Student Management System';
 }
