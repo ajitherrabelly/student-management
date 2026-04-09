@@ -52,6 +52,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(StackOverflowError.class)
+    public ResponseEntity<ErrorResponse> handleStackOverflowError(
+            StackOverflowError ex,
+            HttpServletRequest request) {
+        return new ResponseEntity<>(
+            new ErrorResponse("Internal Recursion Error: Data relationship too complex", 500, LocalDateTime.now(), request.getRequestURI()),
+            HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(
             Exception ex,

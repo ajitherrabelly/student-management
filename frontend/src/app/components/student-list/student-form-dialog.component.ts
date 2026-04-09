@@ -29,7 +29,6 @@ export class StudentFormDialogComponent {
     public dialogRef: MatDialogRef<StudentFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    // Build form with pre-populated data if editing
     this.form = this.fb.group({
       name: [data?.student?.name || '', [Validators.required]],
       email: [data?.student?.email || '', [Validators.required, Validators.email]],

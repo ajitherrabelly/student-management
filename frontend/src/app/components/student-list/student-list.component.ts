@@ -12,6 +12,7 @@ import { StudentService } from '../../services/student.service';
 import { Student } from '../../models/models';
 import { StudentFormDialogComponent } from './student-form-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { StudentCoursesComponent } from '../student-courses/student-courses.component';
 
 @Component({
   selector: 'app-student-list',
@@ -103,6 +104,14 @@ export class StudentListComponent implements OnInit, CanComponentDeactivate {
           error => this.showError(error.error?.message || 'Failed to delete')
         );
       }
+    });
+  }
+
+  openCoursesDialog(student: Student): void {
+    this.dialog.closeAll();
+    this.dialog.open(StudentCoursesComponent, {
+      width: '600px',
+      data: { studentId: student.id }
     });
   }
 
