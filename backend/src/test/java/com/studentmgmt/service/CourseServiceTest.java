@@ -107,7 +107,6 @@ public class CourseServiceTest {
     @Test
     void testUpdateCourse_Success() {
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
-        when(courseRepository.existsByName(anyString())).thenReturn(false);
         when(courseRepository.save(any(Course.class))).thenReturn(course);
 
         CourseDTO result = courseService.updateCourse(1L, courseDTO);

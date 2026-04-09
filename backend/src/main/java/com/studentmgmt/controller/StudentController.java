@@ -20,13 +20,11 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
-        // Create new student and return with 201 status
         return new ResponseEntity<>(studentService.createStudent(studentDTO), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<StudentDTO>> getAllStudents() {
-        // TODO: add pagination in future
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
@@ -48,7 +46,6 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    // Enrollment endpoints
     @PostMapping("/{studentId}/courses/{courseId}")
     public ResponseEntity<StudentDTO> enrollInCourse(
             @PathVariable Long studentId,

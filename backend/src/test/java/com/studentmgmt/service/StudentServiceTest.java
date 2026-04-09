@@ -113,7 +113,6 @@ public class StudentServiceTest {
     @Test
     void testUpdateStudent_Success() {
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
-        when(studentRepository.existsByEmail(anyString())).thenReturn(false);
         when(studentRepository.save(any(Student.class))).thenReturn(student);
 
         StudentDTO result = studentService.updateStudent(1L, studentDTO);
