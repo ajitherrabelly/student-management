@@ -1,9 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { CanComponentDeactivate } from '../../guards/component-deactivate.guard';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { StudentService } from '../../services/student.service';
@@ -16,17 +18,19 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatSnackBarModule
   ],
   templateUrl: './student-list.component.html',
   styleUrls: ['./student-list.component.scss']
 })
-export class StudentListComponent implements OnInit {
+export class StudentListComponent implements OnInit, CanComponentDeactivate {
   private studentService = inject(StudentService);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
@@ -34,8 +38,13 @@ export class StudentListComponent implements OnInit {
   students: Student[] = [];
   displayedColumns: string[] = ['name', 'email', 'phone', 'courses', 'actions'];
 
+  isDirty = false;
+
+  canDeactivate(): boolean {
+    return !this.isDirty;
+  }
+
   ngOnInit(): void {
-    // Subscribe to student updates from the service
     this.studentService.students$.subscribe(students => {
       this.students = students;
     });
@@ -50,7 +59,6 @@ export class StudentListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // TODO: should probably add validation here too
         this.studentService.createStudent(result).subscribe(
           () => this.showSuccess('Student created!'),
           error => this.showError(error.error?.message || 'Failed to create')
@@ -103,9 +111,9 @@ export class StudentListComponent implements OnInit {
   }
 
   private showError(message: string): void {
-    this.snackBar.open(message, 'Close', { 
-      duration: 5000, 
-      panelClass: ['error'] 
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['error']
     });
   }
 }

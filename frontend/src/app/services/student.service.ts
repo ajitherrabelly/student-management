@@ -17,7 +17,6 @@ export class StudentService {
   }
 
   loadStudents(): void {
-    // Load initial student data from API
     this.http.get<Student[]>(this.apiUrl).subscribe(
       students => this.studentsSubject.next(students),
       error => console.error('Error loading students:', error)
@@ -32,7 +31,6 @@ export class StudentService {
     return this.http.post<Student>(this.apiUrl, student)
       .pipe(
         tap(newStudent => {
-          // Update local state after create
           const current = this.studentsSubject.value;
           this.studentsSubject.next([...current, newStudent]);
         })

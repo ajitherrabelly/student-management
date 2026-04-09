@@ -18,7 +18,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResourceNotFound(
             ResourceNotFoundException ex,
             HttpServletRequest request) {
-        // Return 404 when resource is not found
         return new ResponseEntity<>(
             new ErrorResponse(ex.getMessage(), 404, LocalDateTime.now(), request.getRequestURI()),
             HttpStatus.NOT_FOUND
@@ -29,7 +28,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleDuplicateResource(
             DuplicateResourceException ex,
             HttpServletRequest request) {
-        // Return 409 for duplicate resources
         return new ResponseEntity<>(
             new ErrorResponse(ex.getMessage(), 409, LocalDateTime.now(), request.getRequestURI()),
             HttpStatus.CONFLICT
